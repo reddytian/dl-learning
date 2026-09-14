@@ -12,7 +12,7 @@ and production pipelines. This repository closes the PyTorch gap.
 | day | topic | headline result |
 |---|---|---|
 | [1–2](notebooks/day1_2_tensors_and_training_loop.ipynb) | tensors, autograd, training loop | recovered `y = 2x + 1` from noisy data; measured divergence under a too-large learning rate and the capacity ceiling of a linear model |
-| [3](notebooks/day3_mnist_mlp.ipynb) | MLP on MNIST | 97.5% test, +1.1 pt gap |
+| [3](notebooks/day3_mnist_mlp.ipynb) | MLP on MNIST | 97.6% ± 0.15 test, +0.9 pt gap; a fixed pixel permutation costs **nothing** |
 | [4](notebooks/day4_cifar10_cnn.ipynb) | CNN on CIFAR-10, from scratch | 76.6% test, **+21.1 pt gap**; augmentation → 81.9% test, +4.3 pt gap |
 | [5](notebooks/day5_transfer_learning.ipynb) | transfer learning, ResNet-18 | **93.8% test** — 73% error reduction; a frozen backbone beat the from-scratch model while training 0.046% of the network |
 | [6](notebooks/day6_validation_and_interpretation.ipynb) | validation discipline + Grad-CAM | 84.8% ± 0.4% with the test set used **once**; two errors, two opposite diagnoses |
@@ -21,14 +21,23 @@ Days 4 and 6 use the same small CNN; Day 5 uses ResNet-18 at 224×224, so its nu
 not comparable to the others. Day 6's lower figure than Day 5 reflects the smaller
 architecture, not a regression.
 
-## Three findings worth reading
+## Four findings worth reading
+
+**A fully-connected network on images uses no spatial structure at all.** Applying one
+fixed random permutation to all 784 pixels — identically for every image, rendering
+them unreadable to a human — moved MNIST test accuracy from 0.9756 to 0.9765, a
+difference well inside the ±0.15 standard error. The MLP never used pixel adjacency, so
+destroying it costs nothing. A CNN fails this same test, because convolution's premise
+is precisely that neighbouring pixels belong together. That contrast, not added
+complexity, is the argument for CNNs on imagery.
+→ [Day 3, §6](notebooks/day3_mnist_mlp.ipynb)
 
 **A hyperparameter ranking that didn't survive a re-run.** Four regularization settings
 spanned 1.70 points of validation accuracy. Re-running the apparent winner with the
 *same seed* moved it 1.22 points and dropped it from first to third. Run-to-run noise
 was comparable to the entire between-configuration spread, so the ranking was mostly
 noise. Traced to cuDNN non-deterministic reduction kernels and per-worker DataLoader
-RNG. The repository reports this rather than the ranking.
+RNG. This repository reports that rather than the ranking.
 → [Day 6, §4](notebooks/day6_validation_and_interpretation.ipynb)
 
 **Two errors, two opposite diagnoses.** Grad-CAM showed that cat/dog confusion comes
