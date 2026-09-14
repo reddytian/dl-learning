@@ -11,7 +11,7 @@ and production pipelines. This repository closes the PyTorch gap.
 
 | day | topic | headline result |
 |---|---|---|
-| [1–2](notebooks/day1-2_tensors_and_training_loop.ipynb) | tensors, autograd, training loop | recovered `y = 2x + 1` from noisy data; measured divergence under a too-large learning rate and the capacity ceiling of a linear model |
+| [1–2](notebooks/day1_2_tensors_and_training_loop.ipynb) | tensors, autograd, training loop | recovered `y = 2x + 1` from noisy data; measured divergence under a too-large learning rate and the capacity ceiling of a linear model |
 | [3](notebooks/day3_mnist_mlp.ipynb) | MLP on MNIST | 97.5% test, +1.1 pt gap |
 | [4](notebooks/day4_cifar10_cnn.ipynb) | CNN on CIFAR-10, from scratch | 76.6% test, **+21.1 pt gap**; augmentation → 81.9% test, +4.3 pt gap |
 | [5](notebooks/day5_transfer_learning.ipynb) | transfer learning, ResNet-18 | **93.8% test** — 73% error reduction; a frozen backbone beat the from-scratch model while training 0.046% of the network |
