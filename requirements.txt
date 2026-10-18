@@ -4,3 +4,8 @@ numpy
 matplotlib
 scikit-learn
 pandas
+
+# Days 10-12: geospatial pipelines and pretrained segmentation encoders
+rasterio>=1.3
+scipy
+segmentation-models-pytorch>=0.3
